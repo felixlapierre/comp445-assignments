@@ -46,4 +46,15 @@ public class HttpcTest {
         assertEquals(HelpMessages.PostUsageHelpMessage, response);
     }
     
+    @Test
+    public void testGetWithQueryParams() {
+        Httpc command = new Httpc();
+        String[] args = new String[2];
+        args[0] = "get";
+        args[1] = "'http://httpbin.org/get?course=networking&assignment=1'";
+        String response = command.execute(args);
+        assertTrue(response.contains("\"assignment\": \"1\","));
+        assertTrue(response.contains("\"course\": \"networking\","));
+    }
+    
 }
