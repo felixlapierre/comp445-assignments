@@ -26,4 +26,24 @@ public class HttpcTest {
         assertEquals(HelpMessages.BasicHelpMessage, response);
     }
     
+    @Test
+    public void testGetUsageHelp() {
+        Httpc command = new Httpc();
+        String[] args = new String[2];
+        args[0] = "help";
+        args[1] = "get";
+        String response = command.execute(args);
+        assertEquals(HelpMessages.GetUsageHelpMessage, response);
+    }
+    
+    @Test
+    public void testPostUsageHelp() {
+        Httpc command = new Httpc();
+        String[] args = new String[2];
+        args[0] ="help";
+        args[1] = "post";
+        String response = command.execute(args);
+        assertEquals(HelpMessages.PostUsageHelpMessage, response);
+    }
+    
 }

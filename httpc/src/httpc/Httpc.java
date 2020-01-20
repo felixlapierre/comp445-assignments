@@ -5,6 +5,8 @@
  */
 package httpc;
 
+import java.util.InputMismatchException;
+
 /**
  *
  * @author Felix
@@ -22,23 +24,24 @@ public class Httpc {
     }
     
     public String execute(String[] args) {
-        if(args.length == 0) {
-            return "Expected at least 1 argument: recieved 0";
-        }
-        if(args[0].equals("help")) {
-            if(args.length == 1) {
-                return HelpMessages.BasicHelpMessage;
-            } else if(args[1].equals("get")) {
-                
-            } else if(args[1].equals("post")) {
-                
-            } else {
-                
+        try {
+            ValidateAtLeastOneArgument(args);
+            if(IsHelpCommand(args)) {
+                return HelpMessages.GenerateHelpMessage(args);
             }
+        } catch(Exception e) {
+            return e.getMessage();
         }
-        return "Nothing";
+        return "An unknown error occurred";
     }
     
+    public void ValidateAtLeastOneArgument(String[] args) {
+        if(args.length == 0) {
+            throw new InputMismatchException("Expected at least 1 argument: recieved 0");
+        }
+    }
     
-    
+    public boolean IsHelpCommand(String[] args) {
+        return args[0].equals("help");
+    }
 }
