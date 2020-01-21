@@ -13,9 +13,9 @@ import static org.junit.Assert.*;
  *
  * @author Felix
  */
-public class CommandLineArgumentTest {
+public class OptionsParserTest {
     
-    public CommandLineArgumentTest() {
+    public OptionsParserTest() {
     }
 
     @Test
@@ -25,13 +25,11 @@ public class CommandLineArgumentTest {
         args[1] = "-v";
         args[2] = "http://httpbin.org";
         
-        CommandLineArgument[] result = CommandLineArgument.parseArguments(args);
+        Options options = OptionsParser.parse(args);
         
-        assertEquals(result[0].type, CommandLineArgument.Type.Method);
-        assertEquals(result[0].contents, args[0]);
-        assertEquals(result[1].type, CommandLineArgument.Type.VerboseFlag);
-        assertEquals(result[2].type, CommandLineArgument.Type.URL);
-        assertEquals(result[2].contents, args[2]);
+        assertEquals(args[0], options.method);
+        assertEquals(true, options.verbose);
+        assertEquals(args[2], options.url);
     }
     
     @Test
@@ -42,14 +40,11 @@ public class CommandLineArgumentTest {
         args[2] = "{\"Assignment\": 1}";
         args[3] = "http://httpbin.org";
         
-        CommandLineArgument[] result = CommandLineArgument.parseArguments(args);
+        Options options = OptionsParser.parse(args);
         
-        assertEquals(result[0].type, CommandLineArgument.Type.Method);
-        assertEquals(result[0].contents, args[0]);
-        assertEquals(result[1].type, CommandLineArgument.Type.InlineData);
-        assertEquals(result[1].contents, args[2]);
-        assertEquals(result[2].type, CommandLineArgument.Type.URL);
-        assertEquals(result[2].contents, args[3]);
+        assertEquals(args[0], options.method);
+        assertEquals(args[2], options.inlineData);
+        assertEquals(args[3], options.url);
     }
     
     @Test(expected = InputMismatchException.class)
@@ -58,7 +53,7 @@ public class CommandLineArgumentTest {
         args[0] = "post";
         args[1] = "-d";
         
-        CommandLineArgument.parseArguments(args);        
+        OptionsParser.parse(args);     
     }
     
 }

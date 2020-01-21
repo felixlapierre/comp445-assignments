@@ -26,12 +26,12 @@ public class Httpc {
     public String execute(String[] args) {
         try {
             ValidateArguments(args);
+            
             if(IsHelpCommand(args)) {
                 return HelpMessages.GenerateHelpMessage(args);
             }
             
-            CommandLineArgument[] arguments = CommandLineArgument.parseArguments(args);
-            
+            Options options = OptionsParser.parse(args);
             
         } catch(Exception e) {
             return e.getMessage();
