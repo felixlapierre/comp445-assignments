@@ -33,10 +33,11 @@ public class Httpc {
             
             Options options = OptionsParser.parse(args);
             
+            Client client = new Client(options);
+            return client.sendRequest();
         } catch(Exception e) {
             return e.getMessage();
         }
-        return "An unknown error occurred";
     }
     
     public void ValidateArguments(String[] args) {
@@ -44,13 +45,13 @@ public class Httpc {
             throw new InputMismatchException("Expected at least 1 argument: recieved 0");
         }
         
-        if(args[0] == "help") {
+        if(args[0].equals("help")) {
             if(args.length > 1
-                && args[1] != "get"
-                && args[1] != "post") {
+                && !args[1].equals("get")
+                && !args[1].equals("post")) {
                 throw new InputMismatchException("Error: help must be followed by 'get', 'post', or nothing.");
             }
-        } else if(args[0] != "get" && args[0] != "post") {
+        } else if(!args[0].equals("get") && !args[0].equals("post")) {
             throw new InputMismatchException("Error: first argument must be either 'help', 'get', or 'post'");
         }
     }

@@ -66,26 +66,30 @@ public class OptionsParser {
     }
 
     private static void validateGet(Options options) {
-        if(options.method == "post")
+        if(options.method == null)
+            return;
+        else if(options.method.equals("post"))
             throw new InputMismatchException("Method was defined as both POST and GET");
-        if(options.method == "get")
+        else if(options.method.equals("get"))
             throw new InputMismatchException("Method was defined as GET twice");
     }
 
     private static void validatePost(Options options) {
-        if(options.method == "post")
+        if(options.method == null)
+            return;
+        else if(options.method.equals("post"))
             throw new InputMismatchException("Method was defined as POST twice");
-        if(options.method == "get")
+        else if(options.method.equals("get"))
             throw new InputMismatchException("Method was defined as both GET and POST");
     }
 
     private static void validateInlineData(Options options) {
-        if(options.method == "get")
+        if(options.method.equals("get"))
             throw new InputMismatchException("Inline data (-d) can be added to POST requests, not GET requests.");
     }
 
     private static void validateFilename(Options options) {
-        if(options.method == "get")
+        if(options.method.equals("get"))
             throw new InputMismatchException("File data (-f) can be added to POST requests, not GET requests.");
     }
 

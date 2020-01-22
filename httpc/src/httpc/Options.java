@@ -29,7 +29,7 @@ public class Options {
         headers.add(header);
     }
     
-    public Iterator<String> getHeaders() {
-        return headers.iterator();
+    public Iterable<String> getHeaders() {
+        return headers;
     }
 }

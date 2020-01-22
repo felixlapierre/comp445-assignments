@@ -5,6 +5,7 @@
  */
 package httpc;
 
+import java.util.regex.Pattern;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -51,10 +52,25 @@ public class HttpcTest {
         Httpc command = new Httpc();
         String[] args = new String[2];
         args[0] = "get";
-        args[1] = "'http://httpbin.org/get?course=networking&assignment=1'";
+        args[1] = "httpbin.org/get?course=networking&assignment=1";
         String response = command.execute(args);
-        assertTrue(response.contains("\"assignment\": \"1\","));
-        assertTrue(response.contains("\"course\": \"networking\","));
+        assertTrue(!response.contains("HTTP/1.0 200 OK"));
+        assertTrue(response.charAt(0) == '{');
+        assertTrue(response.contains("\"assignment\""));
+        assertTrue(response.contains("\"networking\""));
+    }
+    
+    @Test
+    public void testGetWithQueryParamsVerbose() {
+        Httpc command = new Httpc();
+        String[] args = new String[3];
+        args[0] = "get";
+        args[1] = "-v";
+        args[2] = "httpbin.org/get?course=networking&assignment=1";
+        String response = command.execute(args);
+        assertTrue(response.contains("HTTP/1.0 200 OK"));
+        assertTrue(response.contains("\"assignment\""));
+        assertTrue(response.contains("\"networking\""));
     }
     
 }
