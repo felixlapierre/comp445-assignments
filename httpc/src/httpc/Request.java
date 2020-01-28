@@ -23,7 +23,7 @@ public class Request {
             builder.append(s).append("\r\n");
         }
 
-        if(options.method == "post" && options.inlineData != null) {
+        if(options.method.equals("post") && options.inlineData != null) {
             String body = options.inlineData;
             builder.append("Content-Length: ")
                 .append(body.length())
