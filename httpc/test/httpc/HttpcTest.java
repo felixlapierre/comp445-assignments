@@ -88,5 +88,4 @@ public class HttpcTest {
         assertTrue(response.contains("\"json\": {\n    \"Assignment\": 1"));
         assertTrue(response.contains("\"data\": \"{\\\"Assignment\\\": 1}\""));
     }
-    
 }

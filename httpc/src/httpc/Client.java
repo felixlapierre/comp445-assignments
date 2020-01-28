@@ -5,6 +5,7 @@
  */
 package httpc;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -14,7 +15,7 @@ import java.net.Socket;
  * @author Felix
  */
 public class Client {
-    private Options options;
+    private final Options options;
     public Client(Options options) {
         this.options = options;
     }
@@ -44,7 +45,7 @@ public class Client {
             socket.close();
             
             return response;
-        } catch(Exception e) {
+        } catch(IOException e) {
             return e.getClass() + ":" + e.getMessage();
         }
     }

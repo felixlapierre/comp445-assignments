@@ -10,30 +10,35 @@ package httpc;
  * @author Felix
  */
 public class Request {
+
     public static String create(Options options) {
         StringBuilder builder = new StringBuilder();
 
         builder.append(options.method.toUpperCase())
-            .append(' ')
-            .append(new SplitUrl(options.url).getPath())
-            .append(' ')
-            .append("HTTP/1.0\r\n");
+                .append(' ')
+                .append(new SplitUrl(options.url).getPath())
+                .append(' ')
+                .append("HTTP/1.0\r\n");
 
-        for(String s : options.getHeaders()) {
+        for (String s : options.getHeaders()) {
             builder.append(s).append("\r\n");
         }
 
-        if(options.method.equals("post") && options.inlineData != null) {
-            String body = options.inlineData;
-            builder.append("Content-Length: ")
-                .append(body.length())
-                .append("\r\n")
-                .append("\r\n")
-                .append(body);
+        if (options.method.equals("post")) {
+            if (options.inlineData != null) {
+                String body = options.inlineData;
+                builder.append("Content-Length: ")
+                        .append(body.length())
+                        .append("\r\n")
+                        .append("\r\n")
+                        .append(body);
+            } else if(options.fileName != null) {
+                
+            }
         } else {
             builder.append("\r\n");
         }
-        
+
         return builder.toString();
     }
 }
