@@ -37,13 +37,13 @@ public class OptionsParserTest {
         String[] args = new String[4];
         args[0] = "post";
         args[1] = "-d";
-        args[2] = "{\"Assignment\": 1}";
+        args[2] = "\'{\"Assignment\": 1}\'";
         args[3] = "http://httpbin.org";
         
         Options options = OptionsParser.parse(args);
         
         assertEquals(args[0], options.method);
-        assertEquals(args[2], options.inlineData);
+        assertEquals("{\"Assignment\": 1}", options.inlineData);
         assertEquals(args[3], options.url);
     }
     

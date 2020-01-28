@@ -38,7 +38,7 @@ public class OptionsParser {
                     validateInlineData(options);
                     i++;
                     String data = GetNextArgument(args, i);
-                    options.inlineData = data;
+                    options.inlineData = formatInlineData(data);
                     break;
                 case "-f":
                     validateFilename(options);
@@ -66,26 +66,40 @@ public class OptionsParser {
     }
 
     private static void validateGet(Options options) {
-        if(options.method == null)
-            return;
-        else if(options.method.equals("post"))
-            throw new InputMismatchException("Method was defined as both POST and GET");
-        else if(options.method.equals("get"))
-            throw new InputMismatchException("Method was defined as GET twice");
+        if(null == options.method) {
+        } else switch (options.method) {
+            case "post":
+                throw new InputMismatchException("Method was defined as both POST and GET");
+            case "get":
+                throw new InputMismatchException("Method was defined as GET twice");
+            default:
+                break;
+        }
     }
 
     private static void validatePost(Options options) {
-        if(options.method == null)
-            return;
-        else if(options.method.equals("post"))
-            throw new InputMismatchException("Method was defined as POST twice");
-        else if(options.method.equals("get"))
-            throw new InputMismatchException("Method was defined as both GET and POST");
+        if(null == options.method) {
+        } else switch (options.method) {
+            case "post":
+                throw new InputMismatchException("Method was defined as POST twice");
+            case "get":
+                throw new InputMismatchException("Method was defined as both GET and POST");
+            default:
+                break;
+        }
     }
 
     private static void validateInlineData(Options options) {
         if(options.method.equals("get"))
             throw new InputMismatchException("Inline data (-d) can be added to POST requests, not GET requests.");
+    }
+    
+    private static String formatInlineData(String data) {
+        if(data.charAt(0) != '\'' || data.charAt(data.length() - 1) != '\'') {
+            throw new InputMismatchException("Inline data must be surrounded by single quotes.");
+        } else {
+            return data.substring(1, data.length() - 1);
+        }
     }
 
     private static void validateFilename(Options options) {

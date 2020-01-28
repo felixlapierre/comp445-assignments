@@ -72,4 +72,21 @@ public class HttpcTest {
         assertTrue(response.contains("\"networking\""));
     }
     
+    @Test
+    public void testPostWithInlineData() {
+        Httpc command = new Httpc();
+        String[] args = new String[6];
+        args[0] ="post";
+        args[1] = "-h";
+        args[2] = "Content-Type:application/json";
+        args[3] = "-d";
+        args[4] = "'{\"Assignment\": 1}'";
+        args[5] = "httpbin.org/post";
+        String response = command.execute(args);
+        
+        assertTrue(response.charAt(0) == '{');
+        assertTrue(response.contains("\"json\": {\n    \"Assignment\": 1"));
+        assertTrue(response.contains("\"data\": \"{\\\"Assignment\\\": 1}\""));
+    }
+    
 }
