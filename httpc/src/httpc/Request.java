@@ -5,13 +5,16 @@
  */
 package httpc;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+
 /**
  *
  * @author Felix
  */
 public class Request {
 
-    public static String create(Options options) {
+    public static String create(Options options) throws IOException {
         StringBuilder builder = new StringBuilder();
 
         builder.append(options.method.toUpperCase())
@@ -32,13 +35,32 @@ public class Request {
                         .append("\r\n")
                         .append("\r\n")
                         .append(body);
-            } else if(options.fileName != null) {
-                
+            } else if (options.fileName != null) {
+                String body = loadFile(options.fileName);
+                builder.append("Content-Length: ")
+                        .append(body.length())
+                        .append("\r\n")
+                        .append("\r\n")
+                        .append(body);
             }
         } else {
             builder.append("\r\n");
         }
 
+        return builder.toString();
+    }
+
+    public static String loadFile(String filename) throws IOException {
+        FileInputStream input = new FileInputStream(filename);
+        StringBuilder builder = new StringBuilder();
+
+        int data = input.read();
+
+        while (data != -1) {
+            builder.append((char)data);
+            data = input.read();
+        }
+        
         return builder.toString();
     }
 }
