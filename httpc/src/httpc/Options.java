@@ -20,6 +20,7 @@ public class Options {
     public String inlineData;
     public String fileName;
     public String url;
+    public String outFile;
     
     public Options() {
         headers = new LinkedList<>();
@@ -31,5 +32,17 @@ public class Options {
     
     public Iterable<String> getHeaders() {
         return headers;
+    }
+    
+    public void setHostHeader(String location) {
+        String hostHeader = null;
+        for(String header : headers) {
+            if(header.startsWith("Host:"));
+                hostHeader = header;
+        }
+        if(hostHeader != null)
+            headers.remove(hostHeader);
+        
+        headers.add("Host: " + location);
     }
 }

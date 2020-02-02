@@ -15,38 +15,63 @@ import java.net.Socket;
  * @author Felix
  */
 public class Client {
+
     private final Options options;
+    private final int MAX_REDIRECTS = 10;
+
     public Client(Options options) {
         this.options = options;
     }
-    
+
     public String sendRequest() {
         SplitUrl url = new SplitUrl(options.url);
-        
+
         try {
             Socket socket = new Socket(url.getDomain(), 80);
-            
+
             InputStream inputStream = socket.getInputStream();
             OutputStream outputStream = socket.getOutputStream();
-            
+
             String request = Request.create(options);
-            
+
             outputStream.write(request.getBytes());
             outputStream.flush();
-            
+
             String response = Response.create(inputStream);
-            
-            if(!options.verbose) {
+            response = handleRedirect(response);
+
+            if (!options.verbose) {
                 String delimiter = "\r\n\r\n";
                 int i = response.indexOf(delimiter);
                 response = response.substring(i + delimiter.length());
             }
-            
+
             socket.close();
-            
+
             return response;
-        } catch(IOException e) {
+        } catch (IOException e) {
             return e.getClass() + ":" + e.getMessage();
         }
+    }
+
+    private String handleRedirect(String response) {
+        int redirects = 0;
+        String locationHeader = "Location: ";
+
+        while (redirects < MAX_REDIRECTS) {
+            if (response.contains("HTTP/1.1 3") && response.contains(locationHeader)) {
+                int locationStartIndex = response.indexOf(locationHeader) + locationHeader.length();
+                int locationEndIndex = response.indexOf("\r\n", locationStartIndex);
+                String newLocation = response.substring(locationStartIndex, locationEndIndex);
+                this.options.setHostHeader(newLocation);
+                response = this.sendRequest();
+                redirects++;
+                
+            } else {
+                return response;
+            }
+        }
+        
+        throw new RuntimeException("Maximum redirect limit reached");
     }
 }

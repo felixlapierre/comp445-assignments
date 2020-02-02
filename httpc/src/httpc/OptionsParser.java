@@ -46,6 +46,10 @@ public class OptionsParser {
                     String filename = GetNextArgument(args, i);
                     options.fileName = filename;
                     break;
+                case "-o":
+                    i++;
+                    String outFile = GetNextArgument(args, i);
+                    options.outFile = outFile;
                 default:
                     validateUrl(options);
                     options.url = args[i];
