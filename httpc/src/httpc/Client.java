@@ -36,6 +36,11 @@ public class Client {
 
             outputStream.write(request.getBytes());
             outputStream.flush();
+            
+            if(options.outFile != null) {
+                Response.writeToFile(options.outFile, inputStream);
+                return "Wrote output to " + options.outFile;
+            }
 
             String response = Response.create(inputStream);
             response = handleRedirect(response);

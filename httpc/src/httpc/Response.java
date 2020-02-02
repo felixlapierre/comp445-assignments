@@ -5,6 +5,7 @@
  */
 package httpc;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -24,5 +25,18 @@ public class Response {
         }
         
         return builder.toString();
+    }
+    
+    public static void writeToFile(String filename, InputStream inputStream) throws IOException {
+        FileOutputStream outputStream = new FileOutputStream(filename);
+        
+        int data = inputStream.read();
+        
+        while(data != -1) {
+            outputStream.write(data);
+            data = inputStream.read();
+        }
+        
+        outputStream.close();
     }
 }
