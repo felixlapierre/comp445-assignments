@@ -22,7 +22,7 @@ public class SplitUrlTest {
         String url = "http://httpbin.org";
         SplitUrl split = new SplitUrl(url);
         
-        assertEquals("http://httpbin.org", split.getDomain());
+        assertEquals("httpbin.org", split.getDomain());
         assertEquals("", split.getPath());
     }
     
@@ -31,7 +31,7 @@ public class SplitUrlTest {
         String url = "http://httpbin.org/";
         SplitUrl split = new SplitUrl(url);
         
-        assertEquals("http://httpbin.org", split.getDomain());
+        assertEquals("httpbin.org", split.getDomain());
         assertEquals("/", split.getPath());
     }
 
@@ -40,7 +40,7 @@ public class SplitUrlTest {
         String url = "http://httpbin.org/get";
         SplitUrl split = new SplitUrl(url);
         
-        assertEquals("http://httpbin.org", split.getDomain());
+        assertEquals("httpbin.org", split.getDomain());
         assertEquals("/get", split.getPath());
     }
     

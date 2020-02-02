@@ -13,21 +13,23 @@ public class SplitUrl {
     private String domain;
     private String path;
     public SplitUrl(String url) {
+        int start = url.indexOf("://");
+        start += start == -1 ? 1 : 3;
+        
         boolean passedFirstDot = false;
-        int i = 0;
-        for(char c : url.toCharArray()) {
+        for(int i = start; i < url.length(); i++) {
+            char c = url.charAt(i);
             if(c == '.') {
                 passedFirstDot = true;
             }
             if(c == '/' && passedFirstDot) {
-                domain = url.substring(0, i);
+                domain = url.substring(start, i);
                 path = url.substring(i);
                 return;
             }
-            i++;
         }
         
-        domain = url;
+        domain = url.substring(start);
         path = "";
     }
     

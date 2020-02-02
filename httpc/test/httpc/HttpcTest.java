@@ -51,7 +51,7 @@ public class HttpcTest {
         Httpc command = new Httpc();
         String[] args = new String[2];
         args[0] = "get";
-        args[1] = "httpbin.org/get?course=networking&assignment=1";
+        args[1] = "http://httpbin.org/get?course=networking&assignment=1";
         String response = command.execute(args);
         assertTrue(!response.contains("HTTP/1.0 200 OK"));
         assertTrue(response.charAt(0) == '{');
@@ -65,9 +65,9 @@ public class HttpcTest {
         String[] args = new String[3];
         args[0] = "get";
         args[1] = "-v";
-        args[2] = "httpbin.org/get?course=networking&assignment=1";
+        args[2] = "http://httpbin.org/get?course=networking&assignment=1";
         String response = command.execute(args);
-        assertTrue(response.contains("HTTP/1.0 200 OK"));
+        assertTrue(response.contains("HTTP/1.1 200 OK"));
         assertTrue(response.contains("\"assignment\""));
         assertTrue(response.contains("\"networking\""));
     }
@@ -81,7 +81,7 @@ public class HttpcTest {
         args[2] = "Content-Type:application/json";
         args[3] = "-d";
         args[4] = "'{\"Assignment\": 1}'";
-        args[5] = "httpbin.org/post";
+        args[5] = "http://httpbin.org/post";
         String response = command.execute(args);
         
         assertTrue(response.charAt(0) == '{');
@@ -99,12 +99,26 @@ public class HttpcTest {
         args[2] = "Content-Type:application/json";
         args[3] = "-f";
         args[4] = "input.json";
-        args[5] = "httpbin.org/post";
+        args[5] = "http://httpbin.org/post";
         String response = command.execute(args);
         
         assertTrue(response.charAt(0) == '{');
         assertTrue(response.contains("\"json\": {\n    \"Assignment\": 1"));
         assertTrue(response.contains("\"data\": \"{\\\"Assignment\\\": 1}\""));
         
+    }
+    
+    @Test
+    public void testRedirect() {
+        Httpc command = new Httpc();
+        String[] args = new String[3];
+        args[0] = "get";
+        args[1] = "http://www.example.org/";
+        args[2] = "-v";
+        // args[3] = "-h";
+        // args[4] = "Host: www.example.org";
+        
+        String response = command.execute(args);
+        assertTrue(response.contains("HTTP/1.0 3"));
     }
 }
