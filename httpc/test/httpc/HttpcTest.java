@@ -121,4 +121,17 @@ public class HttpcTest {
         String response = command.execute(args);
         assertTrue(response.contains("HTTP/1.0 3"));
     }
+    
+    @Test
+    public void testFileOutput() {
+        Httpc command = new Httpc();
+        String[] args = new String[4];
+        args[0] = "get";
+        args[1] = "-o";
+        args[2] = "hello.txt";
+        args[3] = "http://httpbin.org/get";
+        
+        String response = command.execute(args);
+        assertTrue(response.equals("Wrote output to hello.txt"));
+    }
 }

@@ -16,7 +16,7 @@ import java.util.List;
 public class Options {
     public String method;
     public boolean verbose = false;
-    private List<String> headers;
+    private final List<String> headers;
     public String inlineData;
     public String fileName;
     public String url;

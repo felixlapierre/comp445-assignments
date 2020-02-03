@@ -50,6 +50,7 @@ public class OptionsParser {
                     i++;
                     String outFile = GetNextArgument(args, i);
                     options.outFile = outFile;
+                    break;
                 default:
                     validateUrl(options);
                     options.url = args[i];
