@@ -64,7 +64,7 @@ public class Client {
         String locationHeader = "Location: ";
 
         while (redirects < MAX_REDIRECTS) {
-            if (response.contains("HTTP/1.1 3") && response.contains(locationHeader)) {
+            if (response.contains("HTTP/1.0 3") && response.contains(locationHeader)) {
                 int locationStartIndex = response.indexOf(locationHeader) + locationHeader.length();
                 int locationEndIndex = response.indexOf("\r\n", locationStartIndex);
                 String newLocation = response.substring(locationStartIndex, locationEndIndex);

@@ -67,7 +67,7 @@ public class HttpcTest {
         args[1] = "-v";
         args[2] = "http://httpbin.org/get?course=networking&assignment=1";
         String response = command.execute(args);
-        assertTrue(response.contains("HTTP/1.1 200 OK"));
+        assertTrue(response.contains("HTTP/1.0 200 OK"));
         assertTrue(response.contains("\"assignment\""));
         assertTrue(response.contains("\"networking\""));
     }
@@ -113,13 +113,13 @@ public class HttpcTest {
         Httpc command = new Httpc();
         String[] args = new String[3];
         args[0] = "get";
-        args[1] = "http://www.example.org/";
+        args[1] = "http://google.com/";
         args[2] = "-v";
         // args[3] = "-h";
         // args[4] = "Host: www.example.org";
         
         String response = command.execute(args);
-        assertTrue(response.contains("HTTP/1.0 3"));
+        assertTrue(response.contains("HTTP/1.0 200 OK"));
     }
     
     @Test
