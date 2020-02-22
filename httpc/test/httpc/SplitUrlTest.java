@@ -5,6 +5,7 @@
  */
 package httpc;
 
+import httpc.client.SplitUrl;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -51,6 +52,16 @@ public class SplitUrlTest {
         
         assertEquals("httpbin.org", split.getDomain());
         assertEquals("/get", split.getPath());
+    }
+    
+    @Test
+    public void testSplitUrlPortNumber() {
+        String url = "localhost:8080/get";
+        SplitUrl split = new SplitUrl(url);
+        
+        assertEquals("localhost", split.getDomain());
+        assertEquals("/get", split.getPath());
+        assertEquals(8080, split.getPort());
     }
     
 }

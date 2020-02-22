@@ -5,6 +5,8 @@
  */
 package httpc;
 
+import httpc.client.Options;
+import httpc.client.OptionsParser;
 import java.util.InputMismatchException;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -37,7 +39,7 @@ public class OptionsParserTest {
         String[] args = new String[4];
         args[0] = "post";
         args[1] = "-d";
-        args[2] = "\'{\"Assignment\": 1}\'";
+        args[2] = "{\"Assignment\": 1}";
         args[3] = "http://httpbin.org";
         
         Options options = OptionsParser.parse(args);

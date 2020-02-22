@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package httpc;
+package httpc.client;
 
 import java.util.InputMismatchException;
 
@@ -100,11 +100,8 @@ public class OptionsParser {
     }
     
     private static String formatInlineData(String data) {
-        if(data.charAt(0) != '\'' || data.charAt(data.length() - 1) != '\'') {
-            throw new InputMismatchException("Inline data must be surrounded by single quotes.");
-        } else {
-            return data.substring(1, data.length() - 1);
-        }
+        
+        return data;
     }
 
     private static void validateFilename(Options options) {

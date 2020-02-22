@@ -1,0 +1,14 @@
+HTTP/1.0 302 FOUND
+Date: Mon, 17 Feb 2020 16:35:05 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 247
+Connection: keep-alive
+Server: gunicorn/19.9.0
+Location: /relative-redirect/1
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>Redirecting...</title>
+<h1>Redirecting...</h1>
+<p>You should be redirected automatically to target URL: <a href="/relative-redirect/1">/relative-redirect/1</a>.  If not click the link.

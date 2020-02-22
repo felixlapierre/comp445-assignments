@@ -5,6 +5,8 @@
  */
 package httpc;
 
+import httpc.client.HelpMessages;
+import httpc.client.Httpc;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -67,7 +69,7 @@ public class HttpcTest {
         args[1] = "-v";
         args[2] = "http://httpbin.org/get?course=networking&assignment=1";
         String response = command.execute(args);
-        assertTrue(response.contains("HTTP/1.0 200 OK"));
+        assertTrue(response.contains("HTTP/1.1 200 OK"));
         assertTrue(response.contains("\"assignment\""));
         assertTrue(response.contains("\"networking\""));
     }
@@ -80,7 +82,7 @@ public class HttpcTest {
         args[1] = "-h";
         args[2] = "Content-Type:application/json";
         args[3] = "-d";
-        args[4] = "'{\"Assignment\": 1}'";
+        args[4] = "{\"Assignment\": 1}";
         args[5] = "http://httpbin.org/post";
         String response = command.execute(args);
         

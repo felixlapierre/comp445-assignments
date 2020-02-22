@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package httpc;
+package httpc.client;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +27,7 @@ public class Client {
         SplitUrl url = new SplitUrl(options.url);
 
         try {
-            Socket socket = new Socket(url.getDomain(), 80);
+            Socket socket = new Socket(url.getDomain(), url.getPort());
 
             InputStream inputStream = socket.getInputStream();
             OutputStream outputStream = socket.getOutputStream();

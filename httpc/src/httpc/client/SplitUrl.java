@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package httpc;
+package httpc.client;
 
 /**
  *
@@ -12,18 +12,24 @@ package httpc;
 public class SplitUrl {
     private String domain;
     private String path;
+    private int port = 80;
     public SplitUrl(String url) {
         int start = url.indexOf("://");
         start += start == -1 ? 1 : 3;
+        int portStart = 0;
         
-        boolean passedFirstDot = false;
         for(int i = start; i < url.length(); i++) {
             char c = url.charAt(i);
-            if(c == '.') {
-                passedFirstDot = true;
-            }
-            if(c == '/' && passedFirstDot) {
+            if(c == ':') {
                 domain = url.substring(start, i);
+                portStart = i + 1;
+            }
+            
+            if(c == '/') {
+                if(domain == null)
+                    domain = url.substring(start, i);
+                else
+                    port = Integer.parseInt(url.substring(portStart, i));
                 path = url.substring(i);
                 return;
             }
@@ -39,5 +45,9 @@ public class SplitUrl {
     
     public String getPath() {
         return path;
+    }
+    
+    public int getPort() {
+        return port;
     }
 }
